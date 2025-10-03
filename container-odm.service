@@ -20,7 +20,7 @@ ExecStart=/usr/bin/podman run \
         --name odm \
         -d \
         -p 3000:3000 \
-        -v /drone:/var/www/data docker.io/opendronemap/nodeodm:3.5.3 \
+        -v /drone:/var/www/data docker.io/opendronemap/nodeodm:3.5.6 \
         --config /var/www/data/config-coaer.json
 ExecStop=/usr/bin/podman stop \
         --ignore -t 10 \
