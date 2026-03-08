@@ -34,7 +34,7 @@ O projeto inclui um `Makefile` para facilitar a instalação e o gerenciamento d
 
 1.  **Clone o repositório:**
     ```bash
-    git clone <url-do-repositorio>
+    git clone https://github.com/sandroklippel/dronegov-odm.git
     cd dronegov-odm
     ```
 
