@@ -1,0 +1,17 @@
+[Unit]
+Description=WebODM Worker
+PartOf=webodm.pod
+After=webodm-db.service webodm-broker.service
+
+[Container]
+Image=ghcr.io/sandroklippel/webodm_webapp:v2.9.1-coaer
+ContainerName=worker
+Pod=webodm.pod
+Volume=/drone/media:/webodm/app/media:z
+Environment=WO_BROKER=redis://localhost
+Environment=WO_DEBUG=NO
+EnvironmentFile=/etc/webodm.env
+Exec=/bin/bash -c "/webodm/wait-for-postgres.sh localhost /webodm/wait-for-it.sh -t 0 localhost:6379 -- /webodm/wait-for-it.sh -t 0 localhost:8000 -- /webodm/worker.sh start"
+
+[Service]
+Restart=always

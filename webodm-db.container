@@ -1,0 +1,12 @@
+[Unit]
+Description=WebODM Database
+PartOf=webodm.pod
+
+[Container]
+Image=docker.io/opendronemap/webodm_db:latest
+ContainerName=db
+Pod=webodm.pod
+Volume=/drone/db:/var/lib/postgresql/data:Z
+
+[Service]
+Restart=always

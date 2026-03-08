@@ -1,0 +1,14 @@
+[Unit]
+Description=NodeODM Service
+PartOf=webodm.pod
+
+[Container]
+Image=docker.io/opendronemap/nodeodm:3.5.6
+ContainerName=odm
+Pod=webodm.pod
+Volume=/drone:/var/www/data
+Exec=--config /var/www/data/config-coaer.json
+
+[Service]
+Restart=on-failure
+TimeoutStopSec=70
