@@ -32,19 +32,19 @@ install: generate-secret
 
 start:
 	@echo "Iniciando o pod webodm..."
-	systemctl start webodm.pod
+	systemctl start webodm-pod
 
 stop:
 	@echo "Parando o pod webodm..."
-	systemctl stop webodm.pod
+	systemctl stop webodm-pod
 
 restart:
 	@echo "Reiniciando o pod webodm..."
-	systemctl restart webodm.pod
+	systemctl restart webodm-pod
 
 status:
 	@echo "--- Status do Systemd ---"
-	systemctl status webodm.pod --no-pager || true
+	systemctl status webodm-pod --no-pager || true
 	@echo ""
 	@echo "--- Status dos Containers (Podman) ---"
 	podman ps --filter pod=webodm
