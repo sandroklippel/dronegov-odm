@@ -11,3 +11,6 @@ Volume=/drone/db:/var/lib/postgresql/data:Z
 
 [Service]
 Restart=always
+
+[Install]
+WantedBy=multi-user.target

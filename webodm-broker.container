@@ -10,3 +10,6 @@ Network=webodm.network
 
 [Service]
 Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -32,7 +32,7 @@ install: generate-secret
 
 start:
 	@echo "Iniciando os serviços do WebODM..."
-	systemctl start webodm-webapp
+	systemctl start webodm-db webodm-broker webodm-worker webodm-webapp webodm-nodeodm
 
 stop:
 	@echo "Parando os serviços do WebODM..."

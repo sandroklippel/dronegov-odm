@@ -15,3 +15,6 @@ Exec=/bin/bash -c "/webodm/wait-for-postgres.sh db /webodm/wait-for-it.sh -t 0 b
 
 [Service]
 Restart=always
+
+[Install]
+WantedBy=multi-user.target

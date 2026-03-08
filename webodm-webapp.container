@@ -1,6 +1,7 @@
 [Unit]
 Description=WebODM WebApp
 After=webodm-db.service webodm-broker.service webodm-network.service
+Wants=webodm-db.service webodm-broker.service webodm-worker.service
 Requires=webodm-network.service
 
 [Container]
@@ -20,3 +21,6 @@ Exec=/bin/bash -c "chmod +x /webodm/*.sh && /webodm/wait-for-postgres.sh db /web
 
 [Service]
 Restart=always
+
+[Install]
+WantedBy=multi-user.target

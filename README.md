@@ -6,16 +6,16 @@ Este projeto orquestra os serviços do WebODM utilizando **Podman Quadlets**, pe
 
 ## 🏗️ Concepção e Arquitetura
 
-Diferente de implementações tradicionais com Docker Compose, este projeto utiliza o conceito de **Pod** do Podman.
+Este projeto utiliza **Quadlets** nativos do Podman com uma rede dedicada, replicando a facilidade de comunicação do Docker Compose mas com a robustez do Systemd.
 
-*   **Pod Integrado (`webodm.pod`):** Todos os serviços rodam dentro de um único Pod. Isso significa que eles compartilham o mesmo namespace de rede (comunicam-se via `localhost`) e o mesmo endereço IP.
+*   **Rede Dedicada (`webodm.network`):** Os serviços comunicam-se através de uma rede bridge isolada chamada `webodm-net`.
 *   **Serviços:**
     *   **WebApp:** Interface web do WebODM.
     *   **Worker:** Processador de tarefas em background.
     *   **NodeODM:** Nó de processamento de imagens.
     *   **DB:** Banco de dados PostgreSQL.
     *   **Broker:** Redis para fila de mensagens.
-*   **Rede:** A única porta exposta para o host é a **80**, que é redirecionada internamente para a porta 8000 do WebApp.
+*   **Comunicação:** Os containers resolvem uns aos outros pelos nomes de serviço (`db`, `broker`, `webapp`, etc.).
 *   **Segurança:** Segredos (como `WO_SECRET_KEY`) são gerados automaticamente e armazenados em `/etc/webodm.env` com permissões restritas.
 
 ## 📋 Pré-requisitos
@@ -45,7 +45,7 @@ O projeto inclui um `Makefile` para facilitar a instalação e o gerenciamento d
     ```
 
 3.  **Instale os serviços:**
-    Este comando copia os arquivos `.container` e `.pod` para `/etc/containers/systemd/`, gera a chave secreta se não existir e recarrega o systemd.
+    Este comando copia os arquivos `.container` e `.network` para `/etc/containers/systemd/`, gera a chave secreta se não existir e recarrega o systemd.
     ```bash
     sudo make install
     ```
@@ -64,14 +64,14 @@ Utilize o `Makefile` para as operações do dia a dia:
 | Comando | Descrição |
 | :--- | :--- |
 | `sudo make status` | Exibe o status do serviço no systemd e lista os containers ativos no Podman. |
-| `sudo make logs` | Exibe os logs de todos os containers do pod simultaneamente (tail -f). |
-| `sudo make stop` | Para o pod e todos os serviços associados. |
-| `sudo make restart` | Reinicia o pod. Útil após alterações de configuração. |
+| `sudo make logs` | Exibe os logs de todos os containers simultaneamente (tail -f). |
+| `sudo make stop` | Para todos os serviços associados. |
+| `sudo make restart` | Reinicia os serviços. Útil após alterações de configuração. |
 | `sudo make uninstall` | Para os serviços e remove os arquivos de configuração do systemd. |
 
 ## 📂 Estrutura de Arquivos
 
-*   `webodm.pod`: Definição do Pod e mapeamento de portas.
+*   `webodm.network`: Definição da rede isolada.
 *   `webodm-*.container`: Definições individuais dos serviços (WebApp, Worker, DB, Broker, NodeODM).
 *   `/etc/webodm.env`: Arquivo gerado na instalação contendo variáveis de ambiente sensíveis.
 *   `/etc/containers/systemd/`: Local onde os Quadlets são instalados.

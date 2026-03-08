@@ -13,3 +13,6 @@ Exec=--config /var/www/data/config-coaer.json
 [Service]
 Restart=on-failure
 TimeoutStopSec=70
+
+[Install]
+WantedBy=multi-user.target
