@@ -1,0 +1,5 @@
+[Unit]
+Description=WebODM Network
+
+[Network]
+NetworkName=webodm-net

@@ -1,11 +1,12 @@
 [Unit]
 Description=WebODM Database
-PartOf=webodm.pod
+After=webodm-network.service
+Requires=webodm-network.service
 
 [Container]
 Image=docker.io/opendronemap/webodm_db:latest
 ContainerName=db
-Pod=webodm.pod
+Network=webodm.network
 Volume=/drone/db:/var/lib/postgresql/data:Z
 
 [Service]

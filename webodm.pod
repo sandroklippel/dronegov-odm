@@ -1,5 +1,0 @@
-[Unit]
-Description=WebODM Pod
-
-[Pod]
-PublishPort=80:8000

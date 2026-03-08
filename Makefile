@@ -4,7 +4,7 @@ SYSTEMD_DIR = /etc/containers/systemd
 SECRET_FILE = /etc/webodm.env
 
 # Lista de arquivos Quadlet
-QUADLET_FILES = webodm.pod \
+QUADLET_FILES = webodm.network \
                 webodm-db.container \
                 webodm-broker.container \
                 webodm-webapp.container \
@@ -31,23 +31,23 @@ install: generate-secret
 	@echo "Arquivos instalados. Execute 'make start' para iniciar o pod."
 
 start:
-	@echo "Iniciando o pod webodm..."
-	systemctl start webodm-pod
+	@echo "Iniciando os serviços do WebODM..."
+	systemctl start webodm-webapp
 
 stop:
-	@echo "Parando o pod webodm..."
-	systemctl stop webodm-pod
+	@echo "Parando os serviços do WebODM..."
+	systemctl stop webodm-webapp webodm-worker webodm-nodeodm webodm-db webodm-broker
 
 restart:
-	@echo "Reiniciando o pod webodm..."
-	systemctl restart webodm-pod
+	@echo "Reiniciando o WebODM..."
+	systemctl restart webodm-webapp
 
 status:
 	@echo "--- Status do Systemd ---"
-	systemctl status webodm-pod --no-pager || true
+	systemctl status webodm-webapp --no-pager || true
 	@echo ""
 	@echo "--- Status dos Containers (Podman) ---"
-	podman ps --filter pod=webodm
+	podman ps --filter network=webodm-net
 
 logs:
 	journalctl -f -u webodm-webapp -u webodm-worker -u webodm-nodeodm -u webodm-db -u webodm-broker

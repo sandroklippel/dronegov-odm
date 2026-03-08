@@ -1,11 +1,12 @@
 [Unit]
 Description=WebODM Redis Broker
-PartOf=webodm.pod
+After=webodm-network.service
+Requires=webodm-network.service
 
 [Container]
 Image=docker.io/library/redis:7.0.10
 ContainerName=broker
-Pod=webodm.pod
+Network=webodm.network
 
 [Service]
 Restart=always

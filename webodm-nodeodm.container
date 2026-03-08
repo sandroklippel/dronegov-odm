@@ -1,11 +1,12 @@
 [Unit]
 Description=NodeODM Service
-PartOf=webodm.pod
+After=webodm-network.service
+Requires=webodm-network.service
 
 [Container]
 Image=docker.io/opendronemap/nodeodm:3.5.6
 ContainerName=odm
-Pod=webodm.pod
+Network=webodm.network
 Volume=/drone:/var/www/data
 Exec=--config /var/www/data/config-coaer.json
 
